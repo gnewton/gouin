@@ -32,13 +32,13 @@ func TestJoinTableInfo_makeKey(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := person.Add(pid, uint64(42)); err != nil {
+	if err := person.Set(pid, uint64(42)); err != nil {
 		t.Fatal(err)
 	}
-	if err := person.Add(pname, "Bill"); err != nil {
+	if err := person.Set(pname, "Bill"); err != nil {
 		t.Fatal(err)
 	}
-	if err := person.Add(pHasCar, true); err != nil {
+	if err := person.Set(pHasCar, true); err != nil {
 		t.Fatal(err)
 	}
 
@@ -58,7 +58,7 @@ func TestJoinTableInfo_makeKey(t *testing.T) {
 
 	car, err := carRecord1(carTable, carId, manufacturer, model, year)
 
-	joinTable, err := NewJoinTable2(personTable, carTable, nil, manufacturer, model, year)
+	joinTable, err := NewJoinTable(personTable, carTable, nil, manufacturer, model, year)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -129,12 +129,12 @@ func TestJoinTableInfo_makeKey(t *testing.T) {
 		t.Fatal(err)
 	}
 	// person ID
-	err = joinRecord.AddAt(0, person.values[joinTable.joinTableInfo.leftTable.pk.positionInTable])
+	err = joinRecord.SetAt(0, person.values[joinTable.joinTableInfo.leftTable.pk.positionInTable])
 	if err != nil {
 		t.Fatal(err)
 	}
 	// carId
-	err = joinRecord.AddAt(1, rightTableId)
+	err = joinRecord.SetAt(1, rightTableId)
 	if err != nil {
 		t.Fatal(err)
 	}

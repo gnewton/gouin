@@ -78,13 +78,13 @@ func TestPersist_Insert(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := rec.AddAt(0, uint64(42)); err != nil {
+	if err := rec.SetAt(0, uint64(42)); err != nil {
 		t.Fatal(err)
 	}
-	if err := rec.AddAt(1, "Bill"); err != nil {
+	if err := rec.SetAt(1, "Bill"); err != nil {
 		t.Fatal(err)
 	}
-	if err := rec.AddAt(2, true); err != nil {
+	if err := rec.SetAt(2, true); err != nil {
 		t.Fatal(err)
 	}
 
@@ -104,13 +104,13 @@ func TestPersist_Insert(t *testing.T) {
 	if err = rec.Reset(); err != nil {
 		t.Fatal(err)
 	}
-	if err := rec.AddAt(0, uint64(49)); err != nil {
+	if err := rec.SetAt(0, uint64(49)); err != nil {
 		t.Fatal(err)
 	}
-	if err := rec.AddAt(1, "Harry"); err != nil {
+	if err := rec.SetAt(1, "Harry"); err != nil {
 		t.Fatal(err)
 	}
-	if err := rec.AddAt(2, false); err != nil {
+	if err := rec.SetAt(2, false); err != nil {
 		t.Fatal(err)
 	}
 	err = p.Insert(rec)
@@ -195,13 +195,13 @@ func TestPersist_InsertWithBeginTx(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := rec.AddAt(0, uint64(42)); err != nil {
+	if err := rec.SetAt(0, uint64(42)); err != nil {
 		t.Fatal(err)
 	}
-	if err := rec.AddAt(1, "Bill"); err != nil {
+	if err := rec.SetAt(1, "Bill"); err != nil {
 		t.Fatal(err)
 	}
-	if err := rec.AddAt(2, true); err != nil {
+	if err := rec.SetAt(2, true); err != nil {
 		t.Fatal(err)
 	}
 
@@ -217,13 +217,13 @@ func TestPersist_InsertWithBeginTx(t *testing.T) {
 	if err = rec.Reset(); err != nil {
 		t.Fatal(err)
 	}
-	if err := rec.AddAt(0, uint64(49)); err != nil {
+	if err := rec.SetAt(0, uint64(49)); err != nil {
 		t.Fatal(err)
 	}
-	if err := rec.AddAt(1, "Harry"); err != nil {
+	if err := rec.SetAt(1, "Harry"); err != nil {
 		t.Fatal(err)
 	}
-	if err := rec.AddAt(2, false); err != nil {
+	if err := rec.SetAt(2, false); err != nil {
 		t.Fatal(err)
 	}
 	err = p.Insert(rec)

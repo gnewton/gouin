@@ -43,7 +43,7 @@ func (r *Record) Reset() error {
 	}
 	return nil
 }
-func (r *Record) Get(f *Field) (interface{}, error) {
+func (r *Record) GetValue(f *Field) (interface{}, error) {
 	if f == nil {
 		return nil, errors.New("field is nil")
 	}
@@ -54,7 +54,7 @@ func (r *Record) Get(f *Field) (interface{}, error) {
 	return r.values[positionInTable], nil
 
 }
-func (r *Record) AddAt(i int, v interface{}) error {
+func (r *Record) SetAt(i int, v interface{}) error {
 	if r.table == nil {
 		return errors.New("Table is nil")
 	}
@@ -79,7 +79,7 @@ func (r *Record) AddAt(i int, v interface{}) error {
 	return nil
 }
 
-func (r *Record) Add(f *Field, v interface{}) error {
+func (r *Record) Set(f *Field, v interface{}) error {
 	if r.table == nil {
 		return errors.New("Table is nil")
 	}

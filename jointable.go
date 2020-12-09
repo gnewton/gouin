@@ -5,8 +5,8 @@ import (
 	"fmt"
 )
 
-func NewJoinTable2(leftTable, rightTable *Table, additionalFields []*Field, rightTableIDCacheKeyFields ...*Field) (*Table, error) {
-	if err := errorsNewJoinTable2(leftTable, rightTable, additionalFields, rightTableIDCacheKeyFields...); err != nil {
+func NewJoinTable(leftTable, rightTable *Table, additionalFields []*Field, rightTableIDCacheKeyFields ...*Field) (*Table, error) {
+	if err := errorsNewJoinTable(leftTable, rightTable, additionalFields, rightTableIDCacheKeyFields...); err != nil {
 		return nil, err
 	}
 
@@ -28,30 +28,36 @@ func NewJoinTable2(leftTable, rightTable *Table, additionalFields []*Field, righ
 	jt.pk = lf
 	jt.AddField(rf)
 
-	// if additionalFields != nil {
-	// 	for i, _ := range additionalFields {
-	// 		af := additionalFields[i]
-	// 		if af == nil {
-	// 			return nil, errors.New("Additional field is nil")
-	// 		}
-	// 		err := jt.AddField(af)
-	// 		if err != nil {
-	// 			return nil, err
-	// 		}
-	// 	}
-	// }
-	// Join info
+	err := addAdditionalFields(jt, additionalFields)
+	if err != nil {
+		return nil, err
+	}
+
 	jtInfo := new(JoinTableInfo)
-	jt.joinTableInfo = jtInfo
 	jtInfo.leftTable = leftTable
 	jtInfo.rightTable = rightTable
 	jtInfo.rightTableIDCacheKeyFields = rightTableIDCacheKeyFields
 	jtInfo.rightTableIDCache = make(map[string]uint64)
 
+	jt.joinTableInfo = jtInfo
+
 	return jt, nil
 }
 
-func errorsNewJoinTable2(leftTable, rightTable *Table, additionalFields []*Field, keyFields ...*Field) error {
+func addAdditionalFields(jt *Table, additionalFields []*Field) error {
+	for i, f := range additionalFields {
+		if f == nil {
+			return fmt.Errorf("additional field %d is nil", i)
+		}
+		err := jt.AddField(f)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func errorsNewJoinTable(leftTable, rightTable *Table, additionalFields []*Field, keyFields ...*Field) error {
 	//func errorsNewJoinTable2(leftTable, rightTable *Table, keyFields ...*Field) error {
 	if leftTable == nil {
 		return errors.New("left table is nil")

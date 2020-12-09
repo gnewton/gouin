@@ -71,10 +71,10 @@ func (t *Table) Record() (*Record, error) {
 	return &rec, err
 }
 
-// Returns the join table and (if does not already exist) the right record (which is also passed in)
+// Returns the newly create join record and (if does not already exist) the right record (which is also passed in)
 // Whatever records are return are to be saved
 //
-func (t *Table) JoinRecords(leftR, rightR *Record, joinTable *Table) ([]*Record, error) {
+func (t *Table) JoinRecords(leftR, rightR *Record, joinTable *Table, additionalJTfields *Field) ([]*Record, error) {
 	if t.joinTableInfo == nil {
 		return nil, fmt.Errorf("Table [%s]: is not a join table (joinTableInfo is nil)", t.name)
 	}
@@ -124,12 +124,12 @@ func (t *Table) JoinRecords(leftR, rightR *Record, joinTable *Table) ([]*Record,
 	}
 
 	// left record PK
-	err = joinRecord.AddAt(0, leftR.values[joinTable.joinTableInfo.leftTable.pk.positionInTable])
+	err = joinRecord.SetAt(0, leftR.values[joinTable.joinTableInfo.leftTable.pk.positionInTable])
 	if err != nil {
 		return nil, err
 	}
 	// right record PK
-	err = joinRecord.AddAt(1, rightTableId)
+	err = joinRecord.SetAt(1, rightTableId)
 	if err != nil {
 		return nil, err
 	}

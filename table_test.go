@@ -171,17 +171,17 @@ func _InsertRecord(t *testing.T, db *sql.DB, v0 uint64, v1 string, v2 bool) (*sq
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := rec.Add(f0, v0); err != nil {
+	if err := rec.Set(f0, v0); err != nil {
 		t.Log(err)
 		return nil, nil, err
 	}
 
-	if err := rec.Add(f1, v1); err != nil {
+	if err := rec.Set(f1, v1); err != nil {
 		t.Log(err)
 		return nil, nil, err
 	}
 
-	if err := rec.Add(f2, v2); err != nil {
+	if err := rec.Set(f2, v2); err != nil {
 		t.Log(err)
 		return nil, nil, err
 	}

@@ -174,9 +174,9 @@ func (p *Persister) InsertJoin(jt *Table, leftRec, rightRec *Record) error {
 	}
 
 	// left table id value
-	joinRec.AddAt(0, leftId)
+	joinRec.SetAt(0, leftId)
 	// left table id value
-	joinRec.AddAt(1, rightId)
+	joinRec.SetAt(1, rightId)
 
 	if err := p.Insert(joinRec); err != nil {
 		return err
@@ -239,9 +239,9 @@ func (p *Persister) JoinTableInsert(joinTable *Table, leftRec, rightRec *Record)
 		return err
 	}
 	// left table id value
-	jrec.AddAt(0, leftRec.values[leftRec.table.pk.positionInTable])
+	jrec.SetAt(0, leftRec.values[leftRec.table.pk.positionInTable])
 	// left table id value
-	jrec.AddAt(1, rightRec.values[rightRec.table.pk.positionInTable])
+	jrec.SetAt(1, rightRec.values[rightRec.table.pk.positionInTable])
 
 	if err := p.Insert(jrec); err != nil {
 		return err
