@@ -64,11 +64,11 @@ func (p *Persister) CreateTables(tables ...*Table) error {
 	p.tx = nil
 	return nil
 }
-func (p *Persister) ExistsByPK(tab *Table, v interface{}) (bool, error) {
+func (p *Persister) ExistsByPK(tab *Table, v any) (bool, error) {
 	return false, errors.New("TODO")
 }
 
-func (p *Persister) SelectOneRecordByPK(tab *Table, v interface{}, rec *Record) error {
+func (p *Persister) SelectOneRecordByPK(tab *Table, v any, rec *Record) error {
 
 	if tab == nil {
 		return errors.New("Table is nil")
@@ -99,7 +99,7 @@ func (p *Persister) SelectOneRecordByPK(tab *Table, v interface{}, rec *Record) 
 
 }
 
-func (p *Persister) DeleteByPK(tab *Table, v interface{}) error {
+func (p *Persister) DeleteByPK(tab *Table, v any) error {
 	if tab == nil {
 		return errors.New("Table is nil")
 	}

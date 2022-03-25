@@ -90,7 +90,7 @@ func TestPersist_Insert(t *testing.T) {
 
 	// rec := Record{
 	// 	table:  personTable,
-	// 	values: []*interface{}{uint32(42), "Bill", true},
+	// 	values: []*any{uint32(42), "Bill", true},
 	// }
 
 	if err := rec.initialize(false); err != nil {
@@ -207,7 +207,7 @@ func TestPersist_InsertWithBeginTx(t *testing.T) {
 
 	// rec := Record{
 	// 	table:  personTable,
-	// 	values: []*interface{}{uint32(42), "Bill", true},
+	// 	values: []*any{uint32(42), "Bill", true},
 	// }
 
 	err = p.Insert(rec)

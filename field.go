@@ -39,7 +39,7 @@ func (t SqlType) String() string {
 	return "UNKNOWN TYPE"
 }
 
-func (t SqlType) ValueToString(field *Field, v interface{}) (string, error) {
+func (t SqlType) ValueToString(field *Field, v any) (string, error) {
 	switch t {
 
 	case Text:
@@ -88,7 +88,7 @@ func (f *Field) NeedsQuotes() bool {
 	return f.typ == Text
 }
 
-func (f *Field) CheckValueType(v interface{}) error {
+func (f *Field) CheckValueType(v any) error {
 	if v == nil {
 		return errors.New("value is nil")
 	}
