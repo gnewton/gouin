@@ -103,12 +103,17 @@ func (t *Table) JoinRecords(leftR, rightR *Record, joinTable *Table, additionalJ
 		return nil, err
 	}
 
+	// The new join record and (if needed) the right join record
 	recordsToSave := make([]*Record, 0)
 
 	// Does the join (right) record already exist in the table? Look in the cache
 	rightRecordExists, rightTableId, err := t.joinTableInfo.rightTableIDInCache(cacheKey)
 	if err != nil {
 		return nil, err
+	}
+
+	if !rightRecordExists {
+		rightTableId, err = t.joinTableInfo.newRightTableKey(cacheKey)
 	}
 
 	// Record does not already exist; assign the PK; add it to be saved

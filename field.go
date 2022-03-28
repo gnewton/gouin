@@ -3,8 +3,15 @@ package gouin
 import (
 	"errors"
 	"fmt"
+	"golang.org/x/exp/constraints"
 	"strconv"
 )
+
+type mySqlType interface {
+	constraints.Float | constraints.Integer | string | bool
+}
+
+// type MySqlType mySqlType
 
 type SqlType int
 
@@ -47,7 +54,8 @@ func (t SqlType) ValueToString(field *Field, v any) (string, error) {
 		if ok {
 			return tv, nil
 		} else {
-			return "", errors.New("Value does not match field type: is not a string; field name:" + field.name + ":" + strconv.Itoa(field.positionInTable))
+
+			return "", fmt.Errorf("Value does not match field type: is not a string; field name: %s:%d", field.name, field.positionInTable)
 		}
 	case Uint32:
 		tv, ok := v.(uint32)
@@ -80,7 +88,7 @@ func (t SqlType) ValueToString(field *Field, v any) (string, error) {
 type Field struct {
 	name            string
 	typ             SqlType
-	width           int
+	width           uint
 	positionInTable int
 }
 

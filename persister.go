@@ -69,7 +69,9 @@ func (p *Persister) ExistsByPK(tab *Table, v any) (bool, error) {
 }
 
 func (p *Persister) SelectOneRecordByPK(tab *Table, v any, rec *Record) error {
-
+	if v == nil {
+		return errors.New("PK is nil")
+	}
 	if tab == nil {
 		return errors.New("Table is nil")
 	}

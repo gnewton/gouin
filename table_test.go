@@ -14,7 +14,7 @@ func TestTable_SetNonUint64PK(t *testing.T) {
 	tab, _, f1, _ := personTable(new(DialectSqlite3))
 
 	if err := tab.SetPrimaryKey(f1); err == nil {
-		t.Fatal("Should fail")
+		t.Fatal("Should fail: strings cannot be primary keys")
 	}
 }
 
@@ -22,7 +22,7 @@ func TestTable_SetNilPK(t *testing.T) {
 	tab, _, _, _ := personTable(new(DialectSqlite3))
 
 	if err := tab.SetPrimaryKey(nil); err == nil {
-		t.Fatal("Should fail")
+		t.Fatal("Should fail: nil cannot be primary key")
 	}
 }
 
@@ -30,7 +30,7 @@ func TestTable_AddField_NullField(t *testing.T) {
 	tab, _, _, _ := personTable(new(DialectSqlite3))
 
 	if err := tab.AddField(nil); err == nil {
-		t.Fatal("Should fail")
+		t.Fatal("Should fail: cannot add null as field")
 	}
 }
 
@@ -38,7 +38,7 @@ func TestTable_AddField_EmptyFieldName(t *testing.T) {
 	tab, f0, _, _ := personTable(new(DialectSqlite3))
 	f0.name = ""
 	if err := tab.AddField(f0); err == nil {
-		t.Fatal("Should fail")
+		t.Fatal("Should fail: cannot add field that does not have name")
 	}
 }
 

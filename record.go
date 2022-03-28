@@ -2,7 +2,8 @@ package gouin
 
 import (
 	"errors"
-	"strconv"
+	"fmt"
+	//"strconv"
 )
 
 type Record struct {
@@ -43,6 +44,7 @@ func (r *Record) Reset() error {
 	}
 	return nil
 }
+
 func (r *Record) GetValue(f *Field) (any, error) {
 	if f == nil {
 		return nil, errors.New("field is nil")
@@ -54,7 +56,13 @@ func (r *Record) GetValue(f *Field) (any, error) {
 	return r.values[positionInTable], nil
 
 }
+
+//func (r *Record) SetAt(i int, v any) error {
 func (r *Record) SetAt(i int, v any) error {
+	if v == nil {
+		return errors.New("Value is nil")
+	}
+
 	if r.table == nil {
 		return errors.New("Table is nil")
 	}
@@ -90,8 +98,8 @@ func (r *Record) Set(f *Field, v any) error {
 			return err
 		}
 	}
-	if f.positionInTable > len(r.values) || f.positionInTable < 0 {
-		return errors.New("Field positionInTable out of bounds:" + r.table.name + ":" + f.name + ":" + strconv.Itoa(f.positionInTable))
+	if int(f.positionInTable) > len(r.values) || f.positionInTable < 0 {
+		return fmt.Errorf("Field positionInTable out of bounds: %s:%s  %d", r.table.name, f.name, f.positionInTable)
 	}
 	if err := r.table.fields[f.positionInTable].CheckValueType(v); err != nil {
 		return err

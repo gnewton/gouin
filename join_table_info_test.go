@@ -113,6 +113,15 @@ func TestJoinTableInfo_makeKey(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+
+	if !rightRecordExists {
+		rightTableId, err = joinTable.joinTableInfo.newRightTableKey(cacheKey)
+		if err != nil {
+			t.Fatal(err)
+		}
+		rightRecordExists = true
+	}
+
 	// key should now be in the map
 	if rightRecordExists {
 		t.Log("key: " + cacheKey + " does exists; we just added it;")
