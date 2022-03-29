@@ -5,6 +5,15 @@ import (
 	"fmt"
 )
 
+// type JoinTable struct {
+// 	Table
+// 	joinTablesMap map[string]*Table // if this has JoinTables
+// 	joinTableInfo *JoinTableInfo    // if this is a JoinTable
+// }
+
+// A join table is just a regular table
+
+//func NewJoinTable(leftTable, rightTable *Table, additionalFields []*Field, rightTableIDCacheKeyFields ...*Field) (*Table, error) {
 func NewJoinTable(leftTable, rightTable *Table, additionalFields []*Field, rightTableIDCacheKeyFields ...*Field) (*Table, error) {
 	if err := errorsNewJoinTable(leftTable, rightTable, additionalFields, rightTableIDCacheKeyFields...); err != nil {
 		return nil, err

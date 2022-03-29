@@ -6,13 +6,18 @@ import (
 	"fmt"
 )
 
+type PTable interface {
+	Name() string
+	Fields() []*Field
+	PK() *Field
+}
+
 type Table struct {
 	fields                                  []*Field
 	name                                    string
 	pk                                      *Field
 	fieldMap                                map[string]struct{}
 	fieldCounter                            int
-	dialect                                 Dialect
 	insertPreparedStatement                 *sql.Stmt
 	insertPreparedStatementSql              string
 	deleteByPKPreparedStatement             *sql.Stmt

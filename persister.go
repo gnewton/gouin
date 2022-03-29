@@ -34,7 +34,7 @@ func NewPersister(dialect Dialect, db *sql.DB, txSize uint32) (*Persister, error
 
 func (p *Persister) CreateTables(tables ...*Table) error {
 	if p.tx != nil {
-		return errors.New("Must no be inside transaxtion (tx must be nil)")
+		return errors.New("Must not be inside transaction (tx must be nil)")
 	}
 	var err error
 	p.tx, err = p.db.Begin()
@@ -88,6 +88,7 @@ func (p *Persister) SelectOneRecordByPK(tab *Table, v any, rec *Record) error {
 	}
 	defer rows.Close()
 	if !rows.Next() {
+		//FIXXX should return nil
 		return errors.New("No records returned" + tab.name)
 	}
 
@@ -280,14 +281,13 @@ func (p *Persister) TxCommit(tables ...*Table) error {
 // All tables involved in a transaction must be included here, as prepared statements for each table are created here and cached
 func (p *Persister) TxBegin(tables ...*Table) error {
 	var err error
+	if len(tables) == 0 {
+		return errors.New("No tables in TxBegin")
+	}
 
 	p.tx, err = p.db.Begin()
 	if err != nil {
 		return err
-	}
-
-	if len(tables) == 0 {
-		return errors.New("No tables in TxBegin")
 	}
 
 	for i, _ := range tables {

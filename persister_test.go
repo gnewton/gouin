@@ -169,6 +169,9 @@ func TestPersist_InsertWithBeginTx(t *testing.T) {
 	}
 
 	p, err := NewPersister(dialect, db, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	personTable, _, _, _, err := personTableFull(dialect)
 	if err != nil {
